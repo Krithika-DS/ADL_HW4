@@ -177,7 +177,7 @@ def extract_kart_objects(
             continue
         
         print("track_id - ",track_id)
-        kart_name = info["karts"][track_id]["name"]
+        kart_name = info["karts"][track_id]#["name"]
 
         # Scale coords
         scale_x = img_width / ORIGINAL_WIDTH
