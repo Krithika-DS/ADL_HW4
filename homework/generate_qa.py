@@ -171,10 +171,12 @@ def extract_kart_objects(
     center_y = img_height // 2
 
     for det in detections:
+        print("det - ",det)
         class_id, track_id, x1, y1, x2, y2 = det
         if int(class_id) != 1:
             continue
-
+        
+        print("track_id - ",track_id)
         kart_name = info["karts"][track_id]["name"]
 
         # Scale coords
