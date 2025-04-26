@@ -156,6 +156,14 @@ def extract_kart_objects(
     with open(info_path) as f:
         info = json.load(f)
 
+    if "detections" not in info or view_index >= len(info["detections"]):
+        return []
+
+    if "instances" not in info:
+        print(f"Warning: 'instances' not found in {info_path}")
+        print(json.dumps(info, indent=2))
+        return []
+
     detections = info["detections"][view_index]
     karts = []
 
