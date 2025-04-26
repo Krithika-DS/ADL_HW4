@@ -159,10 +159,10 @@ def extract_kart_objects(
     if "detections" not in info or view_index >= len(info["detections"]):
         return []
 
-    if "instances" not in info:
-        print(f"Warning: 'instances' not found in {info_path}")
-        print(json.dumps(info, indent=2))
-        return []
+    # if "instances" not in info:
+    #     print(f"Warning: 'instances' not found in {info_path}")
+    #     #print(json.dumps(info, indent=2))
+    #     return []
 
     detections = info["detections"][view_index]
     karts = []
@@ -174,6 +174,8 @@ def extract_kart_objects(
         class_id, track_id, x1, y1, x2, y2 = det
         if int(class_id) != 1:
             continue
+
+        kart_name = info["karts"][track_id]["name"]
 
         # Scale coords
         scale_x = img_width / ORIGINAL_WIDTH
@@ -187,7 +189,7 @@ def extract_kart_objects(
         center = ((x1 + x2) // 2, (y1 + y2) // 2)
         karts.append({
             "instance_id": int(track_id),
-            "kart_name": info["instances"][str(track_id)]["name"],
+            "kart_name": kart_name, #info["instances"][str(track_id)]["name"],
             "center": center,
         })
 
