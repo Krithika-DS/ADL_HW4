@@ -159,11 +159,6 @@ def extract_kart_objects(
     if "detections" not in info or view_index >= len(info["detections"]):
         return []
 
-    # if "instances" not in info:
-    #     print(f"Warning: 'instances' not found in {info_path}")
-    #     #print(json.dumps(info, indent=2))
-    #     return []
-
     detections = info["detections"][view_index]
     karts = []
 
@@ -171,13 +166,11 @@ def extract_kart_objects(
     center_y = img_height // 2
 
     for det in detections:
-        print("det - ",det)
         class_id, track_id, x1, y1, x2, y2 = det
         if int(class_id) != 1:
             continue
         
-        print("track_id - ",track_id)
-        kart_name = info["karts"][track_id]#["name"]
+        kart_name = info["karts"][track_id]
 
         # Scale coords
         scale_x = img_width / ORIGINAL_WIDTH
@@ -340,7 +333,7 @@ Usage Example: Visualize QA pairs for a specific file and view:
 
 You probably need to add additional commands to Fire below.
 """
-def generate_all_qa(data_dir: str, output_path: str = "data/train/train_qa_pairs.json"):
+def generate_all_qa(data_dir: str = "data/train", output_path: str = "data/train/train_qa_pairs.json"):
     qa_all = []
     for info_path in Path(data_dir).rglob("*_info.json"):
         for view_index in range(10):  # assuming up to 10 views
