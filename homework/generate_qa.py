@@ -278,16 +278,38 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
         directions[horiz] += 1
         directions[vert] += 1
         qa.append({
+            "question": f"Is {k['kart_name']} to the left or right of the ego car?",
+            "answer": horiz
+        })
+        qa.append({
             "question": f"Is {k['kart_name']} in front of or behind the ego car?",
             "answer": vert
         })
 
     # Counting
-    for dir_key in directions:
-        qa.append({
-            "question": f"How many karts are {dir_key} of the ego car?",
-            "answer": str(directions[dir_key])
-        })
+    # for dir_key in directions:
+    #     qa.append({
+    #         "question": f"How many karts are {dir_key} of the ego car?",
+    #         "answer": str(directions[dir_key])
+    #     })
+    qa.append({
+        "question": f"How many karts are to the left of the ego car?",
+        "answer": str(directions["left"])
+    })
+    qa.append({
+        "question": f"How many karts are to the right of the ego car?",
+        "answer": str(directions["right"])
+    })
+    qa.append({
+        "question": f"How many karts are in front of the ego car?",
+        "answer": str(directions["front"])
+    })
+    qa.append({
+        "question": f"How many karts are behind the ego car?",
+        "answer": str(directions["behind"])
+    })
+
+
 
     return qa
 

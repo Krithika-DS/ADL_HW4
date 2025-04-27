@@ -106,6 +106,15 @@ class VQADatasetForTraining(Dataset):
             "labels": labels.long(),
         }
 
+# Training speed can be improved by adjusting the batch size. I am currently using an RTX 3060 Laptop GPU. 
+# By reducing per_device_train_batch_size from 8 to 3 and increasing gradient_accumulation_steps from 4 to
+# 6, I was able to reduce my training time from 14 hours to just 2 hours. This improvement is due to the 
+# fact that decreasing per_device_train_batch_size reduces the number of samples processed per training 
+# step, which lowers memory usage and speeds up each step—ideal for GPUs with limited VRAM. Meanwhile, 
+# increasing gradient_accumulation_steps allows the model to accumulate gradients over more steps before 
+# performing a weight update, effectively simulating a larger batch size without additional memory cost.
+# Additionally, if you are using an RTX 3060 GPU, consider setting fp16=True in TrainingArguments() instead 
+# of bf16=True, as fp16 is more compatible with this hardware.
 
 def train(
     data_dir: Path | None = None,
