@@ -354,14 +354,14 @@ Usage Example: Visualize QA pairs for a specific file and view:
 You probably need to add additional commands to Fire below.
 """
 def generate_all_qa(data_dir: str = "data/train", output_path: str = "data/train/train_qa_pairs.json"):
-    #qa_all = []
-    qa_all = [
-        {
-            "question": "Where is konqi relative to the ego car?",
-            "answer": "back and right",
-            "image_file": "valid/00044_00_im.jpg"
-        }
-    ]
+    qa_all = []
+    # qa_all = [
+    #     {
+    #         "question": "Where is konqi relative to the ego car?",
+    #         "answer": "back and right",
+    #         "image_file": "valid/00044_00_im.jpg"
+    #     }
+    # ]
     for info_path in Path(data_dir).rglob("*_info.json"):
         for view_index in range(10):  # assuming up to 10 views
             image_file = str(info_path).replace("_info.json", f"_{view_index:02d}_im.jpg")
