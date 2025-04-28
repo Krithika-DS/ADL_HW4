@@ -132,7 +132,8 @@ def draw_detections(
 
 
 def extract_kart_objects(
-    info_path: str, view_index: int, img_width: int = 150, img_height: int = 100, min_box_size: int = 5
+    #info_path: str, view_index: int, img_width: int = 150, img_height: int = 100, min_box_size: int = 5
+    info_path: str, view_index: int, img_width: int = 100, img_height: int = 150, min_box_size: int = 5
 ) -> list:
     """
     Extract kart objects from the info.json file, including their center points and identify the center kart.
@@ -214,7 +215,8 @@ def extract_track_info(info_path: str) -> str:
     return info.get("track_name", "unknown")
 
 
-def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img_height: int = 100) -> list:
+#def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img_height: int = 100) -> list:
+def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img_height: int = 150) -> list:
     """
     Generate question-answer pairs for a given view.
 
@@ -267,7 +269,8 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
     qa.append({"question": "What track is this?", "answer": track})
 
     # Position-based questions
-    directions = {"left": 0, "right": 0, "front": 0, "behind": 0}
+    #directions = {"left": 0, "right": 0, "front": 0, "behind": 0}
+    directions = {"left": 0, "right": 0, "front": 0, "back": 0}
     for k in karts:
         if k["instance_id"] == ego_kart["instance_id"]:
             continue
@@ -311,7 +314,8 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
     })
     qa.append({
         "question": f"How many karts are behind the ego car?",
-        "answer": str(directions["behind"])
+        #"answer": str(directions["behind"])
+        "answer": str(directions["back"])
     })
 
     return qa
