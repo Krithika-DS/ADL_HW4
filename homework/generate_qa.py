@@ -274,7 +274,8 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
         dx = k["center"][0] - ego_kart["center"][0]
         dy = k["center"][1] - ego_kart["center"][1]
         horiz = "left" if dx < 0 else "right"
-        vert = "front" if dy < 0 else "behind"
+        #vert = "front" if dy < 0 else "behind"
+        vert = "front" if dy < 0 else "back"
         directions[horiz] += 1
         directions[vert] += 1
         qa.append({
@@ -284,6 +285,10 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
         qa.append({
             "question": f"Is {k['kart_name']} in front of or behind the ego car?",
             "answer": vert
+        })
+        qa.append({
+            "question": f"Where is {k['kart_name']} relative to the ego car?",
+            "answer": f"{vert} and {horiz}"
         })
 
     # Counting
