@@ -287,6 +287,10 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
             "question": f"Is {k['kart_name']} in front of or behind the ego car?",
             "answer": vert
         })
+        qa.append({
+            "question": f"Where is {k['kart_name']} relative to the ego car?",
+            "answer": f"{vert} and {horiz}"
+        })
 
     # Counting
     qa.append({
