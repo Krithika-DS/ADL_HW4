@@ -309,7 +309,7 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
         "answer": str(directions["behind"])
     })
 
-
+    qa = [item for item in qa if item["answer"] != "0"]
 
     return qa
 
