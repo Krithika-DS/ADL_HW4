@@ -120,7 +120,7 @@ def train(
     data_dir: Path | None = None,
     train_dataset_name: str = "train",
     output_dir: str = "homework/vlm_model", #vlm_sft, homework/vlm_model #edited
-    num_train_epochs: int = 0.2,  # use only 0.05 epoch for training # 0.1 #notedited
+    num_train_epochs: int = 0.1,  # use only 0.05 epoch for training # 0.1 #notedited
     per_device_train_batch_size: int = 3, #8 #edited
     gradient_accumulation_steps: int = 6, #4 #edited
     learning_rate: float = 5e-4,

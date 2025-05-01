@@ -267,14 +267,16 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
     qa.append({"question": "What track is this?", "answer": track})
 
     # Position-based questions
-    directions = {"left": 0, "right": 0, "front": 0, "behind": 0}
+    #directions = {"left": 0, "right": 0, "front": 0, "behind": 0}
+    directions = {"left": 0, "right": 0, "front": 0, "back": 0}
     for k in karts:
         if k["instance_id"] == ego_kart["instance_id"]:
             continue
         dx = k["center"][0] - ego_kart["center"][0]
         dy = k["center"][1] - ego_kart["center"][1]
         horiz = "left" if dx < 0 else "right"
-        vert = "front" if dy < 0 else "behind"
+        #vert = "front" if dy < 0 else "behind"
+        vert = "front" if dy < 0 else "back"
         directions[horiz] += 1
         directions[vert] += 1
         qa.append({
@@ -287,11 +289,6 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
         })
 
     # Counting
-    # for dir_key in directions:
-    #     qa.append({
-    #         "question": f"How many karts are {dir_key} of the ego car?",
-    #         "answer": str(directions[dir_key])
-    #     })
     qa.append({
         "question": f"How many karts are to the left of the ego car?",
         "answer": str(directions["left"])
@@ -306,7 +303,8 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img
     })
     qa.append({
         "question": f"How many karts are behind the ego car?",
-        "answer": str(directions["behind"])
+        #"answer": str(directions["behind"])
+        "answer": str(directions["back"])
     })
 
     qa = [item for item in qa if item["answer"] != "0"]
