@@ -132,8 +132,7 @@ def draw_detections(
 
 
 def extract_kart_objects(
-    #info_path: str, view_index: int, img_width: int = 150, img_height: int = 100, min_box_size: int = 5
-    info_path: str, view_index: int, img_width: int = 100, img_height: int = 150, min_box_size: int = 5
+    info_path: str, view_index: int, img_width: int = 150, img_height: int = 100, min_box_size: int = 5
 ) -> list:
     """
     Extract kart objects from the info.json file, including their center points and identify the center kart.
@@ -215,8 +214,7 @@ def extract_track_info(info_path: str) -> str:
     return info.get("track_name", "unknown")
 
 
-#def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img_height: int = 100) -> list:
-def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img_height: int = 150) -> list:
+def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 150, img_height: int = 100) -> list:
     """
     Generate question-answer pairs for a given view.
 
@@ -270,7 +268,6 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img
 
     # Position-based questions
     directions = {"left": 0, "right": 0, "front": 0, "behind": 0}
-    #directions = {"left": 0, "right": 0, "front": 0, "back": 0}
     for k in karts:
         if k["instance_id"] == ego_kart["instance_id"]:
             continue
@@ -278,7 +275,6 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img
         dy = k["center"][1] - ego_kart["center"][1]
         horiz = "left" if dx < 0 else "right"
         vert = "front" if dy < 0 else "behind"
-        #vert = "front" if dy < 0 else "back"
         directions[horiz] += 1
         directions[vert] += 1
         qa.append({
@@ -288,10 +284,6 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img
         qa.append({
             "question": f"Is {k['kart_name']} in front of or behind the ego car?",
             "answer": vert
-        })
-        qa.append({
-            "question": f"Where is {k['kart_name']} relative to the ego car?",
-            "answer": f"{vert} and {horiz}"
         })
 
     # Counting
@@ -315,8 +307,9 @@ def generate_qa_pairs(info_path: str, view_index: int, img_width: int = 100, img
     qa.append({
         "question": f"How many karts are behind the ego car?",
         "answer": str(directions["behind"])
-        #"answer": str(directions["back"])
     })
+
+
 
     return qa
 
@@ -364,13 +357,6 @@ You probably need to add additional commands to Fire below.
 """
 def generate_all_qa(data_dir: str = "data/train", output_path: str = "data/train/train_qa_pairs.json"):
     qa_all = []
-    # qa_all = [
-    #     {
-    #         "question": "Where is konqi relative to the ego car?",
-    #         "answer": "back and right",
-    #         "image_file": "valid/00044_00_im.jpg"
-    #     }
-    # ]
     for info_path in Path(data_dir).rglob("*_info.json"):
         for view_index in range(10):  # assuming up to 10 views
             image_file = str(info_path).replace("_info.json", f"_{view_index:02d}_im.jpg")
